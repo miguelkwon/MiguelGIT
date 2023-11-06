@@ -1,12 +1,13 @@
 from tkinter import *
 import openpyxl
 import requests
-import pyautogui
+#import pyautogui
 import tkinter
-import pandas as pd
+#import pandas as pd
 import os
 from tkinter import filedialog
 from openpyxl import load_workbook
+
 
 tk = Tk()
 
@@ -183,6 +184,10 @@ def opuserlotto():
     entry74.insert(0,load_lotto['D10'].value)
     entry75.insert(0,load_lotto['E10'].value)
     entry76.insert(0,load_lotto['F10'].value)
+
+     
+
+    
     
 
 
