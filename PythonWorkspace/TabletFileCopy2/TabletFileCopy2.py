@@ -25,6 +25,20 @@ import os, sys
 import subprocess
 import threading
 import time
+import pyautogui as p
+import win32gui
+import cv2
+import PySimpleGUI as sg
+import win32gui
+import win32com.client
+import cv2
+import numpy as np
+import mss
+import win32gui
+import win32ui
+import win32con
+from PIL import ImageGrab
+
 # from PyQt5.QtWidgets import QApplication, QMainWindow, QLineEdit, QPushButton, QLabel
 
 
@@ -36,7 +50,7 @@ import time
 
 win = tk.Tk()
 win.title("RADIANT-TABLET-SETUP")
-win.geometry('900x600')
+win.geometry('1000x300')
 
 
 # progressbar = ttk.Progressbar(win, maximum=100, mode="indeterminate")
@@ -44,31 +58,68 @@ win.geometry('900x600')
 
 
 
-TTZIPCOPYlb = tk.Label(win, text='TrueTest 1.8.zip copy')
+TTZIPCOPYlb = tk.Label(win, text='TrueTest 1.8.zip copy',bg = "yellow", width = 0, height = 0)
 TTZIPCOPYlb.place(x=0, y=0)
 
-TTQUITlb = tk.Label(win, text='TrueTest 1.8 Quit')
-TTQUITlb.place(x=150, y=0)
+TTZIPCOPY2lb = tk.Label(win, text='C:\Program Files\Radiant Vision Systems')
+TTZIPCOPY2lb.place(x=0, y=25)
 
-RENAMEFOLDERlb = tk.Label(win, text='TT folder change name')
-RENAMEFOLDERlb.place(x=300, y=0)
+TTQUITlb = tk.Label(win, text='TrueTest 1.8 Quit',bg = "red", width = 0, height = 0)
+TTQUITlb.place(x=250, y=0)
 
-DLLCOPYlb = tk.Label(win, text='DLLCOPY')
-DLLCOPYlb.place(x=450, y=0)
+TTQUIT2lb = tk.Label(win, text='TrueTest.exe Quit')
+TTQUIT2lb.place(x=250, y=25)
 
-RUNTTlb = tk.Label(win, text='Run TrueTest')
-RUNTTlb.place(x=600, y=0)
+RENAMEFOLDERlb = tk.Label(win, text='TT folder change name',bg = "green", width = 0, height = 0)
+RENAMEFOLDERlb.place(x=350, y=0)
+
+RENAMEFOLDER2lb = tk.Label(win, text='TrueTest 1.8->TrueTest 1.8old')
+RENAMEFOLDER2lb.place(x=350, y=25)
+
+DLLCOPYlb = tk.Label(win, text='DLLCOPY',bg = "pink", width = 0, height = 0)
+DLLCOPYlb.place(x=550, y=0)
+
+DLLCOPY2lb = tk.Label(win, text='\TrueTest 1.8')
+DLLCOPY2lb.place(x=550, y=25)
+
+RUNTTlb = tk.Label(win, text='Run TrueTest',bg = "magenta", width = 0, height = 0)
+RUNTTlb.place(x=650, y=0)
+
+SEQBACKUPlb = tk.Label(win, text='SequenceBackup',bg = "blue", width = 0, height = 0)
+SEQBACKUPlb.place(x=750, y=0)
+
+# SEQCOPYlb = tk.Label(win, text='Sequence Copy',bg = "magenta", width = 0, height = 0)
+# SEQCOPYlb.place(x=750, y=)
+
+# label3 = Label(window, text="공부 중입니다.", bg = "magenta", width = 20, height = 5, anchor = SE);
+# font(글꼴,크기) , fg = 글씨 색깔 , bg = 뒷배경 색깔
+
+
+CAPTURElb = tk.Label(win, text='Screen Capture',bg = "gray", width = 0, height = 0)
+CAPTURElb.place(x=900, y=0)
+
+
 
 
 def Test():
   
   copyfolder=r"C:\Program Files\Radiant Vision Systems"
   source = r"F:\Copy"
+
+  def get_today():
+    now = time.localtime()
+    s = "%02d%02d%02d%02d%02d%02d" % (now.tm_year,now.tm_mon,now.tm_mday,now.tm_hour,now.tm_min,now.tm_sec)
+    return s
+  
+  today=get_today()
+  # save=r'D:\program\RVS\Alignment'
+  
+
+  if not copyfolder:
+   os.mkdir(copyfolder)
+   make_folder(copyfolder)
   shutil.copytree(source,copyfolder,dirs_exist_ok=True)
   messagebox.showinfo("!!!!!!!","복사 완료")
- 
-  
- 
 
 def TTZIP501M():
  
@@ -501,11 +552,11 @@ def allrename501M():
   #  os.rename('\\10.122.50.17\c\Program Files\Radiant Vision Systems\TrueTest 1.8','\\10.122.50.17\c\Program Files\Radiant Vision Systems\TrueTest 1.8 old')
   #  os.rename('\\10.122.50.18\c\Program Files\Radiant Vision Systems\TrueTest 1.8','\\10.122.50.18\c\Program Files\Radiant Vision Systems\TrueTest 1.8 old')
    
-
-
 def onerename():
    os.rename('C:\Program Files\Radiant Vision Systems\TrueTest 1.8','C:\Program Files\Radiant Vision Systems\TrueTest 1.8 old')
-   
+   os.startfile('C:\Program Files\Radiant Vision Systems')
+def checkfoldername():
+   os.startfile('C:\Program Files\Radiant Vision Systems')
 def alldllcopy():
  copyfolder=r"C:\Program Files\Radiant Vision Systems\TrueTest 1.8" 
  source = r"F:\Copy"
@@ -919,56 +970,168 @@ def DLL504C():
  shutil.copytree(source,copyfolder45,dirs_exist_ok=True)
  shutil.copytree(source,copyfolder46,dirs_exist_ok=True)
 
+def seqbackup():
+  def get_today():
+    now = time.localtime()
+    s = "%02d%02d%02d%02d%02d%02d" % (now.tm_year,now.tm_mon,now.tm_mday,now.tm_hour,now.tm_min,now.tm_sec)
+    return s
+
+  
+  backuppath=r"D:\program\RVS\SequenceBackup"
+  today=get_today()
+  backup_dir=backuppath +"/"+ today
+
+  if not backuppath:
+   os.makedirs(backuppath)
+  #  make_folder(backup_dir)
+
+
+  source = r"C:\Radiant Vision Systems Data\TrueTest\Sequence"
+
+
+
+  if __name__ == '__main__':
+    shutil.copytree(
+        source,
+        backup_dir,
+        dirs_exist_ok=True
+    )
+
+def seqcopy():
+
+  sourcepath = r"C:\Radiant Vision Systems Data\TrueTest\Sequence\*.seqxc"
+  filelist=glob.glob(sourcepath)
+  destination1 = r"C:\Radiant Vision Systems Data\TrueTest\Sequence\Master"
+  destination2 = r"C:\Radiant Vision Systems Data\TrueTest\Sequence\Calibration"
+
+
+  for src in filelist:
+    f = os.path.basename(src)
+    tgt1 = os.path.join(destination1, f)
+    tgt2 = os.path.join(destination2, f)
+    shutil.copyfile(src, tgt1)
+    shutil.copyfile(src, tgt2)
+
+def seqall():
+  def get_today():
+    now = time.localtime()
+    s = "%02d%02d%02d%02d%02d%02d" % (now.tm_year,now.tm_mon,now.tm_mday,now.tm_hour,now.tm_min,now.tm_sec)
+    return s
+
+
+  backuppath=r"D:\program\RVS\SequenceBackup"
+  today=get_today()
+  backup_dir=backuppath +"/"+ today
+
+  def make_folder(folder_name): 
+   if not backuppath:
+    os.makedirs(backuppath)
+    make_folder(backup_dir)
+
+
+  source = r"C:\Radiant Vision Systems Data\TrueTest\Sequence"
+
+  if __name__ == '__main__':
+    shutil.copytree(source,backup_dir,dirs_exist_ok=True)
+  
+  sourcepath = r"C:\Radiant Vision Systems Data\TrueTest\Sequence\*.seqxc"
+  filelist=glob.glob(sourcepath)
+  destination1 = r"C:\Radiant Vision Systems Data\TrueTest\Sequence\Master"
+  destination2 = r"C:\Radiant Vision Systems Data\TrueTest\Sequence\Calibration"
+
+
+  for src in filelist:
+    f = os.path.basename(src)
+    tgt1 = os.path.join(destination1, f)
+    tgt2 = os.path.join(destination2, f)
+    shutil.copyfile(src, tgt1)
+    shutil.copyfile(src, tgt2)
+
+def capture():
+  def get_today():
+    now = time.localtime()
+    s = "%02d%02d%02d%02d%02d%02d" % (now.tm_year,now.tm_mon,now.tm_mday,now.tm_hour,now.tm_min,now.tm_sec)
+    return s
+  
+  savedir=r'D:\program\RVS\Alignment'
+  today=get_today()
+  # backup_dir=backuppath +"/"+ today
+  
+  if not os.path.exists(savedir):
+     os.makedirs(savedir)
+   
+   
+  save= savedir+'/'+ today
+  p.screenshot(save +"_Alignment.jpg")
+  os.startfile(savedir)
+
+
+
+
 
 Testbtn = tk.Button(win, text='Test',height=1, width=10, command=Test)
-Testbtn.place(x=0, y=20)
+Testbtn.place(x=0, y=45)
 TTZIP501Mbtn = tk.Button(win, text='501L-1st',height=1, width=10, command=TTZIP501M)
-TTZIP501Mbtn.place(x=0, y=45)
+TTZIP501Mbtn.place(x=0, y=70)
 TTZIP501Cbtn = tk.Button(win, text='501L-2nd', height=1, width=10,command=TTZIP501C)
-TTZIP501Cbtn.place(x=0, y=70)
+TTZIP501Cbtn.place(x=0, y=95)
 TTZIP502Mbtn = tk.Button(win, text='502L-1st', height=1, width=10,command=TTZIP502M)
-TTZIP502Mbtn.place(x=0, y=95)
+TTZIP502Mbtn.place(x=0, y=120)
 TTZIP502Cbtn = tk.Button(win, text='502L-2nd', height=1, width=10,command=TTZIP502C)
-TTZIP502Cbtn.place(x=0, y=120)
+TTZIP502Cbtn.place(x=0, y=145)
 TTZIP503Mbtn = tk.Button(win, text='503L-1st', height=1, width=10,command=TTZIP503M)
-TTZIP503Mbtn.place(x=0, y=145)
+TTZIP503Mbtn.place(x=0, y=170)
 TTZIP503Cbtn = tk.Button(win, text='503L-2nd', height=1, width=10,command=TTZIP503C)
-TTZIP503Cbtn.place(x=0, y=170)
+TTZIP503Cbtn.place(x=0, y=195)
 TTZIP504Mbtn = tk.Button(win, text='504L-1st', height=1, width=10,command=TTZIP504M)
-TTZIP504Mbtn.place(x=0, y=195)
+TTZIP504Mbtn.place(x=0, y=220)
 TTZIP504Cbtn = tk.Button(win, text='504L-2nd', height=1, width=10,command=TTZIP504C)
-TTZIP504Cbtn.place(x=0, y=220)
+TTZIP504Cbtn.place(x=0, y=245)
 
 ALLTTQUITbtn = tk.Button(win, text='ALL',height=1, width=10, command=allkillTT)
-ALLTTQUITbtn.place(x=150, y=20)
+ALLTTQUITbtn.place(x=250, y=45)
 ONETTQUITbtn = tk.Button(win, text='One',height=1, width=10, command=onekillTT)
-ONETTQUITbtn.place(x=150, y=45)
+ONETTQUITbtn.place(x=250, y=70)
 
 Allrenamebtn = tk.Button(win, text='ALL',height=1, width=10, command=allrename501M)
-Allrenamebtn.place(x=300, y=20)
+Allrenamebtn.place(x=350, y=45)
 Onerenamebtn = tk.Button(win, text='One',height=1, width=10, command=onerename)
-Onerenamebtn.place(x=300, y=45)
+Onerenamebtn.place(x=350, y=70)
+checkfoldernamebtn = tk.Button(win, text='Open Folder',height=1, width=10, command=checkfoldername)
+checkfoldernamebtn.place(x=350, y=95)
 
 ALLDLLCOPYbtn = tk.Button(win, text='ALL',height=1, width=10, command=alldllcopy)
-ALLDLLCOPYbtn.place(x=450, y=20)
+ALLDLLCOPYbtn.place(x=550, y=45)
 ONEDLLCOPYbtn = tk.Button(win, text='One',height=1, width=10, command=onedllcopy)
-ONEDLLCOPYbtn.place(x=450, y=45)
+ONEDLLCOPYbtn.place(x=550, y=70)
 
 DLL501Mbtn = tk.Button(win, text='501L-1st',height=1, width=10, command=DLL501M)
-DLL501Mbtn.place(x=450, y=70)
+DLL501Mbtn.place(x=550, y=95)
 DLL501Cbtn = tk.Button(win, text='501L-2nd', height=1, width=10,command=DLL501C)
-DLL501Cbtn.place(x=450, y=95)
+DLL501Cbtn.place(x=550, y=120)
 DLL502Mbtn = tk.Button(win, text='502L-1st', height=1, width=10,command=DLL502M)
-DLL502Mbtn.place(x=450, y=120)
+DLL502Mbtn.place(x=550, y=145)
 DLL502Cbtn = tk.Button(win, text='502L-2nd', height=1, width=10,command=DLL502C)
-DLL502Cbtn.place(x=450, y=145)
+DLL502Cbtn.place(x=550, y=170)
 DLL503Mbtn = tk.Button(win, text='503L-1st', height=1, width=10,command=DLL503M)
-DLL503Mbtn.place(x=450, y=170)
+DLL503Mbtn.place(x=550, y=195)
 DLL503Cbtn = tk.Button(win, text='503L-2nd', height=1, width=10,command=DLL503C)
-DLL503Cbtn.place(x=450, y=195)
+DLL503Cbtn.place(x=550, y=220)
 DLL504Mbtn = tk.Button(win, text='504L-1st', height=1, width=10,command=DLL504M)
-DLL504Mbtn.place(x=450, y=220)
+DLL504Mbtn.place(x=550, y=245)
 DLL504Cbtn = tk.Button(win, text='504L-2nd', height=1, width=10,command=DLL504C)
-DLL504Cbtn.place(x=450, y=245)
+DLL504Cbtn.place(x=550, y=270)
+
+SEQBACKUPCOPYbtn = tk.Button(win, text='Backup',height=1, width=10, command=seqbackup)
+SEQBACKUPCOPYbtn.place(x=750, y=20)
+
+SEQCOPYbtn = tk.Button(win, text='Copy',height=1, width=10, command=seqcopy)
+SEQCOPYbtn.place(x=750, y=45)
+
+SEQALLbtn = tk.Button(win, text='ALL',height=1, width=10, command=seqall)
+SEQALLbtn.place(x=750, y=70)
+
+Capturebtn = tk.Button(win, text='ScreenShot',height=1, width=10, command=capture)
+Capturebtn.place(x=900, y=20)
 
 win.mainloop()
