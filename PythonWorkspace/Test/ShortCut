@@ -1,0 +1,36 @@
+import webbrowser
+import tkinter
+from tkinter import *
+import tkinter as tk
+from tkinter import ttk
+import pywintypes
+import win32api
+
+window=Tk()
+window.title("Web")
+window.geometry("200x80+1500+100")
+
+
+def openweb1():
+  webbrowser.open("https://www.naver.com/")
+  webbrowser.open("https://www.google.co.kr/webhp?hl=ko&tab=ww")
+def openweb2():
+  webbrowser.open("https://mail.naver.com/v2/folders/-1")
+  webbrowser.open("https://mail.google.com/mail/u/0/#inbox")
+def openweb3():
+  webbrowser.open("https://papago.naver.com/")
+  webbrowser.open("https://translate.google.com/?hl=ko")
+def openweb4():
+  webbrowser.open("https://mlbpark.donga.com/mp/b.php?select=hitView&m=search&b=bullpen&search_select2=hitView&query=1000&x=40&y=19")
+  
+ 
+web11btn = tk.Button(window, text='Naver,goole',height=1, width=10, command=openweb1)
+web11btn.place(x=0, y=10)
+web12btn = tk.Button(window, text='Mail',height=1, width=10, command=openweb2)
+web12btn.place(x=90, y=10)
+web21btn = tk.Button(window, text='Translate',height=1, width=10, command=openweb3)
+web21btn.place(x=0, y=40)
+web22btn = tk.Button(window, text='ETC',height=1, width=10, command=openweb4)
+web22btn.place(x=90, y=40)
+ 
+window.mainloop()

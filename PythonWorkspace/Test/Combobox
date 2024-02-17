@@ -1,0 +1,28 @@
+from tkinter import *
+from tkinter import ttk
+import tkinter.messagebox as msgbox
+
+def platform():
+    if combo.get() == '501-1-1':
+        return msgbox.showinfo(title="완료", message="구글을 선택하셨습니다.")
+    elif combo.get()=='501-1-2':
+        return msgbox.showinfo(title="완료", message="네이버를 선택하셨습니다.")
+    elif combo.get()=='엠파스':
+        return msgbox.showinfo(title="완료", message="엠파스를 선택하셨습니다.")
+    
+
+window=Tk()
+window.title("Test")
+window.geometry("300x700+700+100")
+
+combo = ttk.Combobox(window, values = 'values', width = 30)
+combo.grid(row = 50, column = 40)
+combo['values'] = ('501-1-1', '501-1-2')
+combo.current(0)
+combo.pack()
+
+
+action = ttk.Button(window, text="Click", command=platform)
+action.pack()
+
+window.mainloop()
