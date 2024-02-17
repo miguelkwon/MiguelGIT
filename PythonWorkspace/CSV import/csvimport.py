@@ -28,16 +28,21 @@ label1 = tk.Label(TabletSetup, text='Test')
 label1.place(x=500, y=0)
 
 def csvimport():
-    
- csv_test = pd.read_csv('C:/Users/ssa2p/Documents/KakaoTalk Downloads/All.csv')
- print(csv_test)
+    # list_file = []  
+    # files = filedialog.askopenfilenames(initialdir="/",\
+    #              title = "파일을 선택 해 주세요",\
+    #                 filetypes = (("*.csv","*csv"),("*.xlsx","*xlsx"),("*.xls","*xls")))
+    csv_test = pd.read_csv('C:/Users/ssa2p/Documents/KakaoTalk Downloads/All.csv')
+    # csv_test = pd.read_csv(list_file)
+    print(csv_test)
  
-#  list_file = []                                          #파일 목록 담을 리스트 생성
-#  files = filedialog.askopenfilenames(initialdir="/",\
-#                  title = "파일을 선택 해 주세요",\
-#                     filetypes = (("*.csv","*csv"),("*.xlsx","*xlsx"),("*.xls","*xls")))
-# #files 변수에 선택 파일 경로 넣기
-# #  print(files)  #files 리스트 값 출력
+                                              #파일 목록 담을 리스트 생성
+ 
+
+
+
+#files 변수에 선택 파일 경로 넣기
+#  print(files)  #files 리스트 값 출력
  
 
  
