@@ -26,12 +26,12 @@
 
 import cv2 as cv
  
-img_color = cv.imread('F:\Python\Image\lunar.jpg', cv.IMREAD_COLOR)
+img_color = cv.imread('F:\MiguelGIT\PythonWorkspace\Image\step01_0300NIT_B064_imgY_Crop.tif', cv.IMREAD_GRAYSCALE)
  
 height,width = img_color.shape[:2]
 print (height)
 print (width)
-f = open('F:\Python\Image\image.txt', 'w')
+f = open('F:\MiguelGIT\PythonWorkspace\Image\image.txt', 'w')
  
 for y in range(height):
     for x in range(width):
