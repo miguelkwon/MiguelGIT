@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home</title>
+</head>
+<body>
+    <h2>Welcome, {{ user.username }}</h2>
+    <a href="{% url 'add_entry' %}">Add Diary Entry</a>
+    <h3>Your Diary Entries</h3>
+    <ul>
+        {% for entry in entries %}
+            <li>{{ entry.date }}: {{ entry.content }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

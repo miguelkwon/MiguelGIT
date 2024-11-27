@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head><title>회원가입</title></head>
+<body>
+    <h2 style="text-align: center;">회원가입</h2>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <ul>
+            {% for category, message in messages %}
+                <li><strong>{{ category }}:</strong> {{ message }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+    <form method="POST" style="text-align: center;">
+        <label>ID:</label><input type="text" name="username"><br>
+        <label>PW:</label><input type="password" name="password"><br>
+        <input type="submit" value="가입">
+    </form>
+</body>
+</html>

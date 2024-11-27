@@ -1,0 +1,145 @@
+{% extends "base.html" %}
+
+{% block title %}Add Work Log{% endblock %}
+
+{% block content %}
+<h2>Saved Work Logs (This Week)</h2>
+<form method="get" action="{% url 'worklog_by_date' %}">
+    <label for="date">Select Date:</label>
+    <input type="date" id="date" name="date">
+    <button type="submit">View Logs</button>
+</form>
+
+<table class="table-excel">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Customer</th>
+            <th>Location</th>
+            <th>Camera Serial</th>
+            <th>Program Version</th>
+            <th>Issue</th>
+            <th>Action Items</th>
+            <th>Support Hours</th>
+            <th>Sales Demo Hours</th>
+            <th>Hours in Customer Site</th>
+            <th>Result</th>
+            <th>Customer Contact</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for entry in entries %}
+            <tr>
+                <td>{{ entry.date }}</td>
+                <td>{{ entry.customer }}</td>
+                <td>{{ entry.location }}</td>
+                <td>{{ entry.camera_serial }}</td>
+                <td>{{ entry.program_version }}</td>
+                <td>{{ entry.issue }}</td>
+                <td>{{ entry.action_items }}</td>
+                <td>{{ entry.support_hours }}</td>
+                <td>{{ entry.sales_demo_hours }}</td>
+                <td>{{ entry.hours_in_customer_site }}</td>
+                <td>{{ entry.result }}</td>
+                <td>{{ entry.customer_contact }}</td>
+                <td>
+                    <a href="{% url 'edit_entry' entry.pk %}">Edit</a> | 
+                    <button class="delete-btn" onclick="deleteEntry({{ entry.pk }})">Delete</button> | 
+                    <button class="copy-btn" onclick="copyEntry({{ entry.pk }})">Copy</button>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+    <tfoot>
+        <tr>
+            <th colspan="7">Total</th>
+            <th>{{ support_hours_total }}</th>
+            <th>{{ sales_demo_hours_total }}</th>
+            <th>{{ hours_in_customer_site_total }}</th>
+            <th colspan="3"></th>
+        </tr>
+    </tfoot>
+</table>
+
+<h2>Add Work Log Entry</h2>
+<form method="post" class="horizontal-form">
+    {% csrf_token %}
+    <div class="form-group">
+        {{ form.date.label_tag }} {{ form.date }}
+    </div>
+    <div class="form-group">
+        {{ form.customer.label_tag }} {{ form.customer }}
+    </div>
+    <div class="form-group">
+        {{ form.location.label_tag }} {{ form.location }}
+    </div>
+    <div class="form-group">
+        {{ form.camera_serial.label_tag }} {{ form.camera_serial }}
+    </div>
+    <div class="form-group">
+        {{ form.program_version.label_tag }} {{ form.program_version }}
+    </div>
+    <div class="form-group">
+        {{ form.issue.label_tag }} {{ form.issue }}
+    </div>
+    <div class="form-group">
+        {{ form.action_items.label_tag }} {{ form.action_items }}
+    </div>
+    <div class="form-group">
+        {{ form.support_hours.label_tag }} {{ form.support_hours }}
+    </div>
+    <div class="form-group">
+        {{ form.sales_demo_hours.label_tag }} {{ form.sales_demo_hours }}
+    </div>
+    <div class="form-group">
+        {{ form.hours_in_customer_site.label_tag }} {{ form.hours_in_customer_site }}
+    </div>
+    <div class="form-group">
+        {{ form.result.label_tag }} {{ form.result }}
+    </div>
+    <div class="form-group">
+        {{ form.customer_contact.label_tag }} {{ form.customer_contact }}
+    </div>
+    <div class="form-group">
+        <button type="submit">Add</button>
+    </div>
+</form>
+
+<script>
+    function deleteEntry(entryId) {
+        fetch(`/worklog/delete/${entryId}/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}',
+                'Content-Type': 'application/json',
+            },
+        })
+        .then(response => {
+            if (response.ok) {
+                location.reload();
+            } else {
+                alert('Error deleting entry.');
+            }
+        });
+    }
+
+    function copyEntry(entryId) {
+        fetch(`/worklog/copy/${entryId}/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}',
+                'Content-Type': 'application/json',
+            },
+        })
+        .then(response => {
+            if (response.ok) {
+                location.reload();
+            } else {
+                alert('Error copying entry.');
+            }
+        });
+    }
+</script>
+
+{% endblock %}

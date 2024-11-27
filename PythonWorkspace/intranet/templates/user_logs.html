@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block title %}{{ user.username }}'s Work Logs{% endblock %}
+
+{% block content %}
+<h2>{{ user.username }}'s Work Logs ({{ start_of_week|date:"Y-m-d" }} - {{ end_of_week|date:"Y-m-d" }})</h2>
+
+<form method="GET" action="{% url 'user_logs' %}">
+    <label for="selected_date">Select Date:</label>
+    <input type="date" id="selected_date" name="selected_date" value="{{ selected_date }}">
+    <button type="submit">View</button>
+</form>
+
+<table class="table-excel">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Customer</th>
+            <th>Location</th>
+            <th>Camera Serial</th>
+            <th>Program Version</th>
+            <th>Issue</th>
+            <th>Action Items</th>
+            <th>Support Hours</th>
+            <th>Sales Demo Hours</th>
+            <th>Hours in Customer Site</th>
+            <th>Result</th>
+            <th>Customer Contact</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for entry in entries %}
+            <tr>
+                <td>{{ entry.date }}</td>
+                <td>{{ entry.customer }}</td>
+                <td>{{ entry.location }}</td>
+                <td>{{ entry.camera_serial }}</td>
+                <td>{{ entry.program_version }}</td>
+                <td>{{ entry.issue }}</td>
+                <td>{{ entry.action_items }}</td>
+                <td>{{ entry.support_hours }}</td>
+                <td>{{ entry.sales_demo_hours }}</td>
+                <td>{{ entry.hours_in_customer_site }}</td>
+                <td>{{ entry.result }}</td>
+                <td>{{ entry.customer_contact }}</td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="12">No work logs for this week.</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h3>Total Hours ({{ start_of_week|date:"Y-m-d" }} - {{ end_of_week|date:"Y-m-d" }})</h3>
+<table class="table-excel">
+    <thead>
+        <tr>
+            <th>Support Hours</th>
+            <th>Sales Demo Hours</th>
+            <th>Hours in Customer Site</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{{ total_support_hours }}</td>
+            <td>{{ total_sales_demo_hours }}</td>
+            <td>{{ total_hours_in_customer_site }}</td>
+        </tr>
+    </tbody>
+</table>
+{% endblock %}

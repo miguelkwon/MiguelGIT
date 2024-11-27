@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}Delete Work Log{% endblock %}
+
+{% block content %}
+<h2>Delete Work Log Entry</h2>
+<p>Are you sure you want to delete this entry?</p>
+<p>{{ work_log.date }} - {{ work_log.customer }} - {{ work_log.location }} - {{ work_log.camera_serial }} - {{ work_log.program_version }} - {{ work_log.issue }} - {{ work_log.action_items }} - {{ work_log.support_hours }} - {{ work_log.sales_demo_hours }} - {{ work_log.hours_in_customer_site }} - {{ work_log.result }} - {{ work_log.customer_contact }}</p>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Yes, delete</button>
+    <a href="{% url 'worklog' %}">Cancel</a>
+</form>
+{% endblock %}

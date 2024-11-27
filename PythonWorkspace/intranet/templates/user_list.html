@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}User List{% endblock %}
+
+{% block content %}
+<h2>User List</h2>
+<a href="{% url 'export_all_work_logs' %}" class="btn btn-primary">Download All Work Logs (This Week)</a>
+<table class="table-excel" style="width: 50%;">
+    <thead>
+        <tr>
+            <th style="width: 10%;">No.</th>
+            <th style="width: 90%;">Username</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for user in users %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td><a href="{% url 'user_logs' user.id %}">{{ user.username }}</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
